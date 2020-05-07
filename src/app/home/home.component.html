@@ -1,10 +1,11 @@
 
-  	<!-- Start Header -->
+
+    <!-- Start Header -->
       <header id="mu-header" [class.mu-fixed-nav]="fixMenu" role="banner">
 		<div class="container">
               <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class=" navbar-header d-flex flex-grow-1">
-                    <a class="navbar-brand Brand-text" href="#"><img src="assets/image/logo.svg" height="50" width="50" alt="logo">Dishakiran</a>
+                    <a class="navbar-brand Brand-text" href="#"><img src="assets/image/logo.svg" height="50" width="400" alt="logo"></a>
                     <div class="w-100 text-right" style="margin-top: 12px;">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
                             <span class="navbar-toggler-icon" ></span>
@@ -13,57 +14,39 @@
                 </div>
                 <div class="collapse navbar-collapse flex-grow-1 text-left" id="myNavbar">
                     <ul class="navbar-nav mu-menu ml-auto flex-nowrap">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item nav-active">Home</a>
+                        <li class="nav-item nav-menu" [class.active]="selectedMenu==='home'">
+                            <a class="m-2 menu-item" (click)="ScrollToTarget('home','mu-hero')">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item">Product</a>
+                        <li class="nav-item nav-menu" [class.active]="selectedMenu==='service'">
+                            <a class="m-2 menu-item"  (click)="ScrollToTarget('service','mu-book-overview')">Services</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item">Partner</a>
+                        <!-- <li class="nav-item nav-menu">
+                            <a href="#" class="nav-link m-2 menu-item">Partners</a>
+                        </li> -->
+                        <li class="nav-item nav-menu" [class.active]="selectedMenu==='about'">
+                            <a class="m-2 menu-item"  (click)="ScrollToTarget('about','mu-author')">About Us</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item">Career</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item">Contact</a>
+                        <!-- <li class="nav-item nav-menu">
+                            <a href="#mu-contact" class="nav-link m-2 menu-item" (click)="ScrollToTarget(mu-book-overview,career)">Career</a>
+                        </li> -->
+                        <li class="nav-item nav-menu" [class.active]="selectedMenu==='contact'">
+                            <a  class="m-2 menu-item"  (click)="ScrollToTarget('contact','mu-contact')">Contact</a>
                         </li>
                     </ul>
                     <button class="btn btn-primary">Sign in</button>
                 </div>
             </nav>
         </div>
-        
-	</header>
+        <marquee direction="left" style="background-color: red;margin-top: 5px;height: 30px;">TEXT</marquee>
+    </header>
 	<!-- End Header -->
     
 	<!-- Start Featured Slider -->
 	<section id="mu-hero">
-        <marquee direction="left" style="background-color: red;margin-top: 5px;height: 30px;">TEXT</marquee>
 		<div class="container">
-           
-
-            <div class="flex-row">
-                <div class="flex-column" >
-                    <img class="img-fluid home-img" src="assets/image/IQenhancer.png">
-                </div>
-                <div class="flex-column">
-                    <img routerLink="/testView" class="img-fluid home-img" src="assets/image/MentoringProgramme.png">
-                </div>
-                <div class="flex-column">
-                    <img class="img-fluid home-img" src="assets/image/Counselling.png">
-                </div>
-                <div class="flex-column">
-                        <img class="img-fluid home-img" src="assets/image/GamesBlack.png">
-                </div>
-                <div class="flex-column">
-                    <img class="img-fluid home-img" src="assets/image/Psychometric.png">
-                </div>
-                <div class="flex-column">
-                        <img class="img-fluid home-img" src="assets/image/Wellness Suite.png">
+            <div *ngIf="testsList" class="flex-row">
+                <div class="flex-column" *ngFor="let test of testsList" (click)="openTest(test.id)">
+                    <img class="img-fluid home-img" src="{{test.image}}">
                 </div>
               </div>
 		</div>
@@ -91,8 +74,8 @@
 
 							<!-- Start Book Overview Content -->
                             <div class="home-div">
-                                <div class="row">
-                                    <div class="col-md-6 row-bottom-padded-md">
+                                <div class="flex-row">
+                                    <div class="flex-column">
                                         <div>
                                             <img class="img-fluid service-img" src="assets/image/Psychometric_assessment.png">
                                         </div>
@@ -105,7 +88,7 @@
                                                professions</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 row-bottom-padded-md">
+                                    <div class="flex-column">
                                         <div>
                                             <img class="img-fluid service-img" src="assets/image/Psychological_counselling.png">
                                         </div>
@@ -117,13 +100,7 @@
                                                 every child to know that they are worth it</p>
                                         </div>
                                     </div>
-                                    
-                                </div>
-                                
-                            </div>
-                            <div class="home-div">
-                                <div class="row">
-                                    <div class="col-md-6 row-bottom-padded-md">
+                                    <div class="flex-column">
                                         <div>
                                             <img class="img-fluid service-img" src="assets/image/Wellness_Suite.png">
                                         </div>
@@ -134,7 +111,7 @@
                                                 of life issues</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 row-bottom-padded-md">
+                                    <div class="flex-column">
                                         <div>
                                             <img class="img-fluid service-img" src="assets/image/IQ_enhancer.png">
                                         </div>
@@ -146,13 +123,7 @@
                                                 methods</p>
                                         </div>
                                     </div>
-                                    
-                                </div>
-                                
-                            </div>
-                            <div class="home-div">
-                                <div class="row">
-                                    <div class="col-md-6 row-bottom-padded-md" style="margin-left: auto;margin-right: auto;">
+                                    <div class="flex-column" style="margin-left: auto;margin-right: auto;">
                                         <div>
                                             <img class="img-fluid service-img" src="assets/image/Mentorship.png">
                                         </div>
@@ -164,6 +135,7 @@
                                                 successful children</p>
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 
                             </div>
@@ -186,7 +158,7 @@
 						<div class="mu-author-area">
 
 							<div class="mu-heading-area">
-								<h2 class="mu-heading-title">About Company</h2>
+								<h2 class="mu-heading-title">About us</h2>
 								<span class="mu-header-dot"></span>
 							</div>
 
@@ -224,79 +196,13 @@
                                 
                             </div>
                             <div class="home-div">
-                                <h2 class="about-heading">Our Team</h2>
-                                <div class="row row-bottom-padded-md">
-                                    <div class="col-md-4">
-                                        <img class="img-responsive rounded-img" src="assets/image/Andy.jpg">
+                                <div *ngIf="teamData" class="flex-row">
+                                    <div *ngFor="let team of teamData" class="flex-column" (click)="openDetail(team.id)">
+                                            <img class="img-responsive rounded-img" src="{{team.image}}">
+                                                <p style="text-align: center;">{{team.name}}</p>
                                     </div>
-                                    <div class="col-md-8 verticalCenter">
-                                        <p class="textJustifyClass">Andy Anil is an IIT Delhi-IIM Ahmedabad alumni and is a established business leader with more
-                                            than 2 decades of leadership experience in the Indian Army and Corporate world. He conceived
-                                            the idea of Disha Kiran and is passionate about making everyone reach their true potential
-                                            using scientific and reliable assessment tools.</p>
-                                    </div>
+                                    
                                 </div>
-                                
-                            </div>
-                            <div class="home-div">
-                                <div class="row row-bottom-padded-md">
-                                    <div class="col-md-4">
-                                        <img class="img-responsive rounded-img" src="assets/image/Rama_Kant.png">
-                                    </div>
-                                    <div class="col-md-8 verticalCenter">
-                                        <p class="textJustifyClass">Rama Kant is an IIT Delhi and Ecole Centrale de Nantes, France alumni. He is a maverick
-                                            innovator who believes in in the unorthodoxy of life and businesses. Having worked for an
-                                            American tech giant and been a research scholar he mixes modern technology with emotional
-                                            intelligence to design and develop software for Disha Kiran.</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="home-div">
-                                <div class="row row-bottom-padded-md">
-                                    <div class="col-md-4">
-                                        <img class="img-responsive rounded-img" src="assets/image/Pronob.jpg">
-                                    </div>
-                                    <div class="col-md-8 verticalCenter">
-                                        <p class="textJustifyClass">Pronob Roy has a diverse background of leading United Nations mission in different parts of
-                                            the world. He is the “Hero of Haiti” who is hailed as one of the best leaders in disaster
-                                            management, mental-health assessments and interventions. He has been chairman of
-                                            international group of schools, COO of a defense start-up and advisor on the board of one of
-                                            India’s top fashion house. Being an Indian Army veteran he believes in systems approach and
-                                            is the brain behind operational excellence of Disha Kiran.</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="home-div">
-                                <div class="row row-bottom-padded-md">
-                                    <div class="col-md-4">
-                                        <img class="img-responsive rounded-img" src="assets/image/Kulpreet.jpg">
-                                    </div>
-                                    <div class="col-md-8 verticalCenter">
-                                        <p class="textJustifyClass">An Amazon No. 1 bestselling novelist, India’s best thriller writer of 2019 and a motivational
-                                            speaker of repute, Kulpreet is the Founder-Editor of Open Road Review, an international
-                                            literary magazine that has published over 300 writers from 24 countries. As a Creative Writing
-                                            expert, Kulpreet has conducted numerous workshops for aspiring writers, students, teachers
-                                            and professionals. He has mentored and helped start ups climb the ladder of success. He leads
-                                            the creative content of Disha Kiran by customizing solutions as per user’s needs.</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="home-div">
-                                <div class="row row-bottom-padded-md">
-                                    <div class="col-md-4">
-                                        <img class="img-responsive rounded-img" src="assets/image/Vinita.jpg">
-                                    </div>
-                                    <div class="col-md-8 verticalCenter">
-                                        <p class="textJustifyClass">A professional psychometrist and a trained counsellor with more than 15 years of experience
-                                            of working with international NGOs on United Nations projects in India and abroad, Vinita
-                                            Maria Oliveira brings her experience of counselling young students on the table and leads the
-                                            psychological counselling vertical of Disha Kiran.</p>
-                                    </div>
-                                </div>
-                                
                             </div>
 							<!-- End Author Content -->
 
@@ -363,30 +269,17 @@
 		<div class="container">
             <div class="row">
                 <div class="col-sm-3">
-                    <button type="button" class="collapsible">News</button>
-                    <div class="content">
-                    <p>News</p>
-                    <p>News & Media</p>
-                    </div>
+                    <p class="content">News & Media</p>
                 </div>
                 <div class="col-sm-3">
-                    <button type="button" class="collapsible">Career</button>
-                    <div class="content">
-                    <p>Career</p>
-                    <p>News & Media</p>
-                    </div>
+                    <p class="content"> Privacy Policy</p>
                 </div>
                 <div class="col-sm-3">
-                    <button type="button" class="collapsible">Contact us</button>
-                    <div class="content">
-                    <p>Support</p>
-                    <p>Info</p>
-                    </div>
+                    <p class="content">Support</p>
                 </div>
                 <div class="col-sm-3">
                     
                     <div class="mu-footer-area">
-                        <p class="content">Follow us on:</p>
                         <div class="mu-social-media">
                             <a href="#"><i class="fab fa-facebook-square"></i></a>
                             <a href="#"><i class="fab fa-twitter-square"></i></a>
@@ -399,4 +292,104 @@
 			
 		</div>
 	</footer>
-	<!-- End footer -->
+    <!-- End footer -->
+
+    <div id="personModal" class="modal"  [class.modal-open]="openModal"  *ngIf="persons">
+        <div class="modal-content" [ngStyle]="{'width': modalWidth+'px'}">
+          <div class="Modal-header">
+            <h3 style="position:relative;float:left;">{{persons.name}}</h3>
+            <span class="close" (click)="closeDetails()">&times;</span>
+          </div>
+          <hr>
+          <div>
+              {{persons.details}}
+          </div>
+        </div>
+      </div>  
+      <div id="testModal" class="modal"  [class.modal-open]="openTestModal" *ngIf="testData">
+        <div class="modal-content" [ngStyle]="{'width': modalWidth+'px', 'height': modalHeight+'px'}">
+          <div class="Modal-header">
+            <h3 class="modal-Heading">{{testData.name}}</h3>
+            <span class="close" (click)="closeTest()">&times;</span>
+          </div>
+          <hr>
+          <div class="modal-body">
+              <div *ngIf="!isTestEnable">
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              hsdjfsfhsfsfnsjfhsmfdfhsaufdsjfhsfdhuisfsjdfhjsddfsfhkjsdfhjsdfhjsddfhskdfhsjkfjksddhffjksfjkshfjksahfjksfhjsahfjshfjksahfjksahfjksaddhfjksahfjhsafjkhsadjkhh
+              fgsdfhjgsadfhjsadjkldfghjasdfbhjasdsgfhjkhabdsljhjbabdsdjkhfbaehjesfgw
+              gfgdsdhhgfdadksjkhfadsjhfsdajkhfsddjkljghjsadghjasdafgowaegaefdkjawhdwsjkgdfiou
+              fghasdfhjklsadzgasdbfjkkadsksadhaebsdjkbsadlzfbasbdfiueasdljkvboiusadfvbieasdgioubeogb
+              gsduydagvhjkldsfghviusdnvhergisdniudsahvjksdhhiuernsdhergdskjneasiudhgjkaeshdoiuasdiuhasdkljasuijkgeui
+              gahjsdfgouysadfhasddfhasddfhasd,dfuiadsfhiuasdhfksadghfhlasddfhsadasjfiuasddfugaddsfjkadsioufiuasesdftyhawaeesfdgoasdfhijol
+              fsdghhsdijafgiouasddfsadfhhasd dfyuyasdsdfhaisdfhawiuesdfhyashzvasdsduiawaewhsdfjk;khasiuzfxcvhasdsufhvashvaesgodfu
+              <div style="text-align: center;">
+                <input type="checkbox" (change)="termAndConditionChange()" />
+                <label style="margin-left: 10px;">Accept Terms and Condition</label>
+              </div>
+            </div>
+            <div *ngIf="isTestEnable"style="text-align: center;background-color: skyblue;">
+                <div style="text-align: center;">
+                    <div class="col-md-6">asdada</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">asdada</div>
+                    <div class="col-md-6">asdada</div>
+                    <div class="col-md-6">asdada</div>
+                    <div class="col-md-6">asdada</div>
+                </div>
+            </div>
+          </div>
+          <div id="modal-footer">
+            <button class="btn btn-primary" style="margin: auto;display: block;" (click)="continueToTest()" *ngIf="!isTestEnable">Continue</button>
+          </div>
+        </div>
+      </div>  

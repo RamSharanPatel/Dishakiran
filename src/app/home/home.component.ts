@@ -1,5 +1,18 @@
-import {HostListener, Component, OnInit,Renderer2 } from '@angular/core';
+import {HostListener, Component, OnInit,Renderer2, ElementRef } from '@angular/core';
+import { ApiServices } from '../Data-Services/ApiServices';
 declare var jquery:any;
+interface teamObject{
+  name:string,
+  image:string,
+  id:number,
+  details:string
+}
+interface testObject
+{
+  name:string,
+  id:number,
+  image:string,
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,26 +25,35 @@ public careerToogle:boolean=true;
 public contactToogle:boolean=true;
 public innerwidth:any=window.innerWidth;
 public isCollapseEnable:boolean = false;
-  constructor(private rd: Renderer2) { }
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event) {
-  //  this.innerwidth = window.innerWidth;
-  //  if(this.innerwidth<=540)
-  //  {
-  //    this.newsToogle = this.careerToogle = this.contactToogle = false;
-  //   this.isCollapseEnable = true;
-  //   alert("alert(cha)");
-  //  } 
-  //  else
-  //  {
-  //   this.newsToogle = this.careerToogle = this.contactToogle = true;
-  //   this.isCollapseEnable = false;
-    
-  //  }
-  // }
+public teamData:teamObject[]=[];
+public testsList:testObject[]=[];
+public persons:teamObject;
+public testData:testObject;
+public modalWidth :number = window.innerWidth/2;
+public modalHeight:number = window.innerHeight/2;
+public openTestModal:boolean = false;
+public isTermAndCondtionChecked=false;
+isTestEnable:boolean=false;
+public openModal:boolean=false;
+selectedMenu:string="home";
+  constructor(private rd: Renderer2,private httpservice:ApiServices,private el:ElementRef) { }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+   if(this.openModal)
+   {
+    this.modalHeight = window.innerHeight*.50;
+    this.modalWidth =  ((window.innerWidth*.60)>500)?(window.innerWidth*.60):400;
+   }
+   else if(this.openTestModal)
+   {
+    this.modalHeight = window.innerHeight*.80;
+    this.modalWidth =  ((window.innerWidth*.90)>500)?(window.innerWidth*.90):400;
+   }
+
+  }
   @HostListener('window:scroll', ['$event']) 
   scrollHandler(event) {
-    if(window.pageYOffset>150)
+    if(window.pageYOffset>80)
     {
       this.fixMenu = true;
     }
@@ -67,7 +89,63 @@ public isCollapseEnable:boolean = false;
     
   }
   ngOnInit(): void {
-   
+    this.httpservice.getJSON("team").subscribe((data :any)=> {
+      this.teamData = data.teams;
+      this.testsList = data.Tests;
+            },
+      error=> { 
+              console.log("Error in recieving data");     
+  });
   }
+  openDetail(id:number)
+  {
+    document.documentElement.style.overflow = 'hidden';
+    this.modalWidth =  ((window.innerWidth*.60)>500)?(window.innerWidth*.60):320;
+    console.log(this.modalHeight +" "+this.modalWidth);
+    this.persons =  this.teamData.find(x=>x.id == id);
+    this.openModal = true;
 
+  }
+  closeDetails()
+  {
+    document.documentElement.style.overflow = 'scroll';
+    this.openModal = false;
+  }
+  openTest(id:number)
+  {
+    document.documentElement.style.overflow = 'hidden';
+    this.modalHeight =(window.innerHeight*.80);
+    this.modalWidth =  ((window.innerWidth*.90)>500)?(window.innerWidth*.90):320;
+    this.testData =  this.testsList.find(x=>x.id == id);
+    this.openTestModal = true;
+
+  }
+  closeTest()
+  {
+    document.documentElement.style.overflow = 'scroll';
+    this.openTestModal = false;
+  }
+  termAndConditionChange()
+  {
+    this.isTermAndCondtionChecked = !this.isTermAndCondtionChecked;
+  }
+  continueToTest()
+  {
+    if(this.isTermAndCondtionChecked)
+    {
+      this.isTestEnable = true;
+    }
+    else
+    {
+      alert("Please accept terms and condition");
+    }
+  }
+  ScrollToTarget(menu:string,scrolltoel:string)
+  {
+    this.selectedMenu = menu;
+    let el = document.getElementById(scrolltoel);
+  el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+    
+   //el.scrollIntoView();
+  }
 }

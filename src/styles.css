@@ -3,7 +3,7 @@
 body,
 html {
 	overflow-x:hidden;
-	background-color: #a6a29e;
+	
 }
 
 body {
@@ -12,9 +12,10 @@ body {
 	font-size: 15px;
 	letter-spacing: 0.5px;
 	line-height: 1.5;
-	color: #1c1b1b;
+    color: #1c1b1b;
+    background-color: #06031A;
+    
 }
-
 ul {
 	padding: 0;
 	margin: 0;
